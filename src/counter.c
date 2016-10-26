@@ -17,36 +17,21 @@ counter_t counter_reset(counter_t MyCounter)
     return MyCounter;
 }
 
-counter_t counter_state_machine(boolean CLK, boolean RST)
+counter_t counter_state_machine(boolean CLK)
 {
 
-		// State reset
-		// If reset is TRUE
-		if (RST)
+		if(CLK == (boolean)1)
 		{
-			APPLICATION_DATA.counter_state = counter_reset(APPLICATION_DATA.counter_state);
-		}
-		else if(!CLK && !RST)
-		{
-			//State off
-			// If CLK is False and reset is FALSE
-			//do nothing
-		}
-		else if(CLK && !RST)
-		{
-			//State counting
-			// If CLK is TRUE and RST is FALSE, Make a count
-			// If ACC > Threshold ISR is True, RST is True
-
 			APPLICATION_DATA.counter_state.ACC++;
-			if(APPLICATION_DATA.counter_state.ACC >= APPLICATION_DATA.counter_state.TRSHLD)
-			{
-				APPLICATION_DATA.counter_state.ISR = (boolean)1;
-				APPLICATION_DATA.counter_state.RST = (boolean)1;
-			}
 		}
-
-	//	if(ACC > Threshold)
+		if(APPLICATION_DATA.counter_state.ACC <= APPLICATION_DATA.counter_state.TRSHLD)
+		{
+			APPLICATION_DATA.counter_state.ISR = (boolean)0;
+		}
+		else
+		{
+			APPLICATION_DATA.counter_state.ISR = (boolean)1;
+		}
 
 	return APPLICATION_DATA.counter_state;
 }
@@ -54,7 +39,11 @@ counter_t counter_state_machine(boolean CLK, boolean RST)
 counter_t counter_step()
 {
 
-	APPLICATION_DATA.counter_state = counter_state_machine(APPLICATION_DATA.counter_state.CLK,APPLICATION_DATA.counter_state.RST);
+	APPLICATION_DATA.counter_state = counter_state_machine(APPLICATION_DATA.counter_state.CLK);
+	if(APPLICATION_DATA.counter_state.ACC == (uint8_t) 255)
+	{
+		APPLICATION_DATA.counter_state = counter_reset(APPLICATION_DATA.counter_state);
+	}
 
 	return APPLICATION_DATA.counter_state;
 }
