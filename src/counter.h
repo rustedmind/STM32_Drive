@@ -12,7 +12,7 @@
 #include "application_data.h"
 
 
-counter_t counter_state_machine(boolean);
+counter_t counter_state_machine(boolean, boolean);
 counter_t counter_step( void );
 counter_t counter_init(Counter_data);
 
