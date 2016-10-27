@@ -2,14 +2,22 @@
 #include <string.h>
 
 
-
+/*!
+ * @brief initialize a counter
+ * @param counter_t object corresponding to counter
+ * @return counter_t type object, same object as input
+ */
 counter_t counter_init(counter_t MyCounter)
 {
 	memset(&MyCounter,0,sizeof(MyCounter));
 	return MyCounter;
 }
 
-
+/*!
+ * @brief Reset a counter
+ * @param counter_t object corresponding to counter
+ * @return counter_t type object, same object as input
+ */
 counter_t counter_reset(counter_t MyCounter)
 {
 	MyCounter.ACC = 0U;
@@ -17,6 +25,11 @@ counter_t counter_reset(counter_t MyCounter)
     return MyCounter;
 }
 
+/*!
+ * @brief State machine, describing dehavior of counter
+ * @param CLK, signal to allow conter to increase
+ * @return counter_t type object, same object as input
+ */
 counter_t counter_state_machine(boolean CLK)
 {
 
@@ -36,6 +49,10 @@ counter_t counter_state_machine(boolean CLK)
 	return APPLICATION_DATA.counter_state;
 }
 
+/*!
+ * @brief Wrapper for counter state machine with accumulator overflow control
+ * @return counter_t type object
+ */
 counter_t counter_step()
 {
 

@@ -14,7 +14,7 @@
 
 counter_t counter_state_machine(boolean);
 counter_t counter_step( void );
-counter_t counter_init(Counter_data);
+counter_t counter_init(counter_t);
 
 
 #endif /* COUNTER_H_ */
