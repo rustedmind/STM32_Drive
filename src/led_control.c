@@ -12,7 +12,7 @@
  * @brief Control LED indication based on PWM value
  * @param threshold - counter_t THRSLD value
  */
-void led_switch(int8_t threshold)
+void led_switch(uint8_t threshold)
 {
 	static uint8_t width;
 	width = threshold;
